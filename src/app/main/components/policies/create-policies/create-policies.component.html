@@ -75,11 +75,11 @@
                                         <a class="nav-link accord" data-bs-toggle="tab" href="#settings" role="tab">  {{'CreatePolicies.alertSettingsTab' | translate}}
                                         </a>
                                     </li>
-                                    <!-- <li class="nav-item">
-                                        <a class="nav-link accord" data-bs-toggle="tab" href="#opt" role="tab">Opt-in lists
-                                            settings
+                                    <li class="nav-item">
+                                        <a class="nav-link accord" data-bs-toggle="tab" href="#topGroups" role="tab"
+                                        (click)="onUserOrg('groups')">{{'CreatePolicies.topGroups' | translate}}
                                         </a>
-                                    </li> -->
+                                    </li>
                                 </ul>
                                 <div class="tab-content" style="width: 100%;">
                                     <div class="tab-pane active" id="access" role="tabpanel">
@@ -1024,6 +1024,145 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="tab-pane" id="topGroups" role="tabpanel">
+                                        <div class="row mt-3">
+                                            <div class="col-md-7">
+                                                <label> {{'CreatePolicies.searchUsers' | translate}}</label>
+                                                <div class="row mb-2">
+                                                    <div class="col-md-8">
+                                                        <form [formGroup]="formUserPolicy"
+                                                            (ngSubmit)="onSearchUserPolicy(formUserPolicy.value)">
+                                                            <div class="input-group">
+                                                                <div class="form-outline">
+                                                                    <input id="search-input"
+                                                                        formControlName="search"
+                                                                        placeholder="{{'CreatePolicies.searchButtonPlaceholder' | translate}}"
+                                                                        type="search" id="form"
+                                                                        class="form-control"
+                                                                        style="padding: 17.7px; width: 210px;" />
+                                                                </div>
+                                                                <button type="submit"
+                                                                    class="btn btn-success ml-3">
+                                                                    {{'CreatePolicies.searchButton' | translate}}
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="loading" class="dot-opacity-loader">
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="scroll">
+                                                            <table class="table table-hover ">
+                                                                <thead class="thead-dark">
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>
+                                                                            {{'CreatePolicies.usersListGroupsname' | translate}}
+                                                                        </th>
+                                                                        <th>
+                                                                            {{'CreatePolicies.usersListDomains' | translate}}
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr
+                                                                        *ngFor="let org of OrganizationList | paginate: { id:'first', itemsPerPage: 10, currentPage: currentPage, totalItems: totalItems }; let i=index">
+                                                                        <td>
+                                                                            <input type="checkbox" [(ngModel)]="org.selected" [ngModelOptions]="{standalone: true}"
+                                                                                (click)="IsPolicyTopGroup($event, org, i)">
+                                                                        </td>
+                                                                        <td>
+                                                                            {{org.group_name}}
+                                                                        </td>
+                                                                        <td>
+                                                                            {{org.domain}}
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr
+                                                                        *ngIf="OrganizationList.length === 0">
+                                                                        {{'CreatePolicies.usersListRecord' | translate}}
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="width: 100%">
+                                                        <div class="col-md-10 text-right">
+                                                            <pagination-controls
+                                                                (pageChange)="onPageChange($event, '1')"
+                                                                id="first">
+                                                            </pagination-controls>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <select id="PerPage" class="form-control"
+                                                                (change)="onPageChange($event, '2')">
+                                                                <option *ngFor="let item of PageTotalNumber"
+                                                                    [value]="item">
+                                                                    {{ item }}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           
+                                            <div class="col-md-5">
+                                                <div class="recipt">
+                                                    <label> {{'CreatePolicies.usersRecipient' | translate}}</label>
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="table">
+                                                                <label><b>  {{'CreatePolicies.selectedTopGroups' | translate}}</b></label>
+                                                                <!-- <div *ngFor="let group of GroupList">
+                                                                    {{group.group_name}}
+                                                                </div> -->
+                                                                <div class="right-scroll" style="max-height: 478px;">
+                                                                    <table class="table table-hover ">
+                                                                        <thead class="thead-dark">
+                                                                            <tr>
+                                                                                <th>
+                                                                                    {{'CreatePolicies.groupName' | translate}}
+                                                                                </th>
+                                                                                <th>
+                                                                                    {{'CreatePolicies.usersListActions' | translate}}
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr
+                                                                                *ngFor="let group of TopGroupList; let g=index">
+                                                                                <td>
+                                                                                    {{group.group_name}}
+                                                                                </td>
+                                                                                <td>
+                                                                                    <span
+                                                                                        class="text-danger">
+                                                                                        <i class="far fa-trash-alt cursor"
+                                                                                            (click)="onRemoveRowTopGroup(g)"></i>
+                                                                                    </span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <br>
+                                                               
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        
+                                    </div>
+
                                     <!-- <div class="tab-pane " id="opt" role="tabpanel">
                                         <div class="row">
                                             <div class="col-lg-12">

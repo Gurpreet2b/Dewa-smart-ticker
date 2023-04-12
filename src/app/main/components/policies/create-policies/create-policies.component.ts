@@ -30,6 +30,7 @@ export class CreatePoliciesComponent implements OnInit {
 
   public UserList: any = [];
   public GroupList: any = [];
+  public TopGroupList: any = [];
   public ComputerList: any = [];
   public OUList: any = [];
 
@@ -196,6 +197,16 @@ export class CreatePoliciesComponent implements OnInit {
     }
   }
 
+  IsPolicyTopGroup(event: any, list: any, index: any) {
+    let eventData = event.target.checked;
+    if (eventData === true) {
+        this.TopGroupList.push(list);
+    } else {
+        let TopGroupListSelected = this.TopGroupList.filter((x: any) => x.id !== list.id);
+        this.TopGroupList = TopGroupListSelected;
+    }
+  }
+
   IsPolicyOPT(event: any, list: any) {
     let eventData = event.target.checked;
     if (eventData === true) {
@@ -220,6 +231,10 @@ export class CreatePoliciesComponent implements OnInit {
     } else if (UserType === 'OU') {
       this.OUList.splice(index, 1);
     }
+  }
+
+  onRemoveRowTopGroup(index: any) {
+      this.TopGroupList.splice(index, 1);
   }
 
   onUserOrg(item: any) {
@@ -277,6 +292,16 @@ export class CreatePoliciesComponent implements OnInit {
               let ComputerListSelected = this.OrganizationList.filter((x: any) => x.id === element);
               if (ComputerListSelected.length > 0) {
                 ComputerListSelected[0].selected = true;
+              }
+            }
+          }
+        } else if (this.UserType === 'groups') {
+          if (this.TopGroupList.length > 0) {
+            for (let i = 0; i < this.TopGroupList.length; i++) {
+              const element = this.TopGroupList[i].id;
+              let TopGroupListSelected = this.OrganizationList.filter((x: any) => x.id === element);
+              if (TopGroupListSelected.length > 0) {
+                TopGroupListSelected[0].selected = true;
               }
             }
           }
@@ -453,6 +478,7 @@ export class CreatePoliciesComponent implements OnInit {
     formData.append('access_control_list', JSON.stringify(this.ControlEmptyList));
     formData.append('users_list', JSON.stringify(this.UserList));
     formData.append('groups_list', JSON.stringify(this.GroupList));
+    formData.append('top_groups', JSON.stringify(this.TopGroupList));
     formData.append('computers_list', JSON.stringify(this.ComputerList));
     formData.append('ous_list', JSON.stringify(this.OUList));
     formData.append('ous_tree', JSON.stringify(this.OuTree));
@@ -576,6 +602,7 @@ export class CreatePoliciesComponent implements OnInit {
         }
         this.UserList = JSON.parse(res.result.users_list);
         this.GroupList = JSON.parse(res.result.groups_list);
+        this.TopGroupList = JSON.parse(res.result.groups_list);
         this.ComputerList = JSON.parse(res.result.computers_list);
         this.OUList = JSON.parse(res.result.ous_list);
         if (res.result.alert_skin_id_list.length) {

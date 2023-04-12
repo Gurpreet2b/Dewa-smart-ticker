@@ -200,6 +200,7 @@ export class CreateAlertComponent implements OnInit {
     this.SechduleData.end_after_date = this.dtPipe.transform(date, 'yyyy-MM-dd');
 
     this.SkinIdListLocalStorge = this.authService.getSkinIdList();
+    debugger;
     if (this.SkinIdListLocalStorge.length > 0) {
       this.SkinListLocal = SkinData;
       this.GetLocalSkinList(this.SkinListLocal);
@@ -277,6 +278,7 @@ export class CreateAlertComponent implements OnInit {
 
   // Local Skin List By Id Data
   async GetLocalSkinListById(skinId: any) {
+    debugger;
     let SkinData = this.SkinList.filter((x: any) => x.id === skinId);
     let res = SkinData[0];
 
@@ -1050,7 +1052,9 @@ export class CreateAlertComponent implements OnInit {
     document.getElementById("header-scroll-text").innerHTML = `${this.AlertScrollingEditTitle} ${test} ${this.AlertScrollingEditBody}`;
     document.getElementById("header-scroll-texts").innerHTML = `${this.AlertScrollingEditTitle} ${test} ${this.AlertScrollingEditBody}`;
     document.getElementById("header-scroll-text").style.fontSize = `24px`;
-    // document.getElementById("header-scroll-text").style.color = `#fff`;
+    if (this.IsTickerClose && document.getElementById("tickerCloseId") !== null) {
+      document.getElementById("tickerCloseId").style.display = `block`;
+    }
 
     this.ScriptScrollingHTML = ScrollingContainer.innerHTML;
   }
@@ -1351,6 +1355,9 @@ export class CreateAlertComponent implements OnInit {
     if (this.AlertScrollingEditBody || this.AlertScrollingEditBodyPreview) {
       this.IsCheckPreviewTicker = true;
     }
+    if (this.tickerForm.value.allow_manual_close === true) {
+      this.IsTickerClose = true;
+    }
   }
 
   IsCheckPreviewRSVP: any = false;
@@ -1582,8 +1589,12 @@ export class CreateAlertComponent implements OnInit {
           this.OnShowSchedule(ScheduleChoice)
           this.WeeklyDay = JSON.parse(res.data.popup_alert.scheduled_data.weekly_day);
 
-          this.SechduleData.once_start_date = res.data.popup_alert.scheduled_data.once_start_date;
-          this.SechduleData.once_end_date = res.data.popup_alert.scheduled_data.once_end_date;
+          let once_start_date = res.data.popup_alert.scheduled_data.once_start_date;
+          this.SechduleData.once_start_date = this.dtPipe.transform(once_start_date, 'yyyy-MM-ddTHH:mm:ss');
+
+          let once_end_date = res.data.popup_alert.scheduled_data.once_end_date;
+          this.SechduleData.once_end_date = this.dtPipe.transform(once_end_date, 'yyyy-MM-ddTHH:mm:ss');
+
           this.SechduleData.daily_day_choice = res.data.popup_alert.scheduled_data.daily_day_choice;
           this.SechduleData.weekly_choice = res.data.popup_alert.scheduled_data.weekly_choice;
           this.SechduleData.schedule_date_start = res.data.popup_alert.scheduled_data.schedule_date_start;
@@ -1712,8 +1723,12 @@ export class CreateAlertComponent implements OnInit {
           this.OnShowSchedule(ScheduleChoice)
           this.WeeklyDay = JSON.parse(res.data.scheduled_data.weekly_day);
 
-          this.SechduleData.once_start_date = res.data.scheduled_data.once_start_date;
-          this.SechduleData.once_end_date = res.data.scheduled_data.once_end_date;
+          let once_start_date = res.data.scheduled_data.once_start_date;
+          this.SechduleData.once_start_date = this.dtPipe.transform(once_start_date, 'yyyy-MM-ddTHH:mm:ss');
+
+          let once_end_date = res.data.scheduled_data.once_end_date;
+          this.SechduleData.once_end_date = this.dtPipe.transform(once_end_date, 'yyyy-MM-ddTHH:mm:ss');
+
           this.SechduleData.daily_day_choice = res.data.scheduled_data.daily_day_choice;
           this.SechduleData.weekly_choice = res.data.scheduled_data.weekly_choice;
           this.SechduleData.schedule_date_start = res.data.scheduled_data.schedule_date_start;
@@ -1924,6 +1939,7 @@ export class CreateAlertComponent implements OnInit {
   IsTickerColorValue: any;
   ShowFooterImgCheck: any = false
   async IsTickerColorChange(event: any) {
+    debugger;
     this.ShowFooterImgCheck = event.show_alert_footer;
     this.IsTickerColorValue = event.id;
     this.SkinId = event.id;
@@ -1971,6 +1987,7 @@ export class CreateAlertComponent implements OnInit {
         return;
       }
     }
+    
 
     this.startTimer();
     this.submitted = true;
