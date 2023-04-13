@@ -36,6 +36,7 @@ export class CreatePoliciesComponent implements OnInit {
 
   public OrgList: any = [];
   public OrganizationList: any = [];
+  public OrganizationTopList: any = [];
   public AlertSettingList: any = [
     {
       name: "Acknowledgement",
@@ -102,7 +103,7 @@ export class CreatePoliciesComponent implements OnInit {
     this.GetOrganizationById(1);
   }
 
-  OnGrantFullControl(event: any){
+  OnGrantFullControl(event: any) {
     this.IsGrantFullControl = event.target.checked;
   }
 
@@ -154,14 +155,14 @@ export class CreatePoliciesComponent implements OnInit {
         this.authService.logout();
         this.router.navigate(['/signin']);
         this.loading = false;
-        
-      } else if(error.status === 400) {
+
+      } else if (error.status === 400) {
         this.toastr.error("Server Bad Request");
-      } else if(error.status === 403) {
+      } else if (error.status === 403) {
         this.toastr.error("Forbidden Error");
-      } else if(error.status === 404) {
+      } else if (error.status === 404) {
         this.toastr.error("Server not Found");
-      } else if(error.status === 500) {
+      } else if (error.status === 500) {
         this.toastr.error("Internal Server Error");
       } else {
         this.toastr.error("Server not reachable");
@@ -200,10 +201,10 @@ export class CreatePoliciesComponent implements OnInit {
   IsPolicyTopGroup(event: any, list: any, index: any) {
     let eventData = event.target.checked;
     if (eventData === true) {
-        this.TopGroupList.push(list);
+      this.TopGroupList.push(list);
     } else {
-        let TopGroupListSelected = this.TopGroupList.filter((x: any) => x.id !== list.id);
-        this.TopGroupList = TopGroupListSelected;
+      let TopGroupListSelected = this.TopGroupList.filter((x: any) => x.id !== list.id);
+      this.TopGroupList = TopGroupListSelected;
     }
   }
 
@@ -233,8 +234,12 @@ export class CreatePoliciesComponent implements OnInit {
     }
   }
 
-  onRemoveRowTopGroup(index: any) {
-      this.TopGroupList.splice(index, 1);
+  onRemoveRowTopGroup(index: any, list: any) {
+    this.TopGroupList.splice(index, 1);
+    let TopGroupListSelected = this.OrganizationList.filter((x: any) => x.id === list.id);
+    if (TopGroupListSelected.length > 0) {
+      TopGroupListSelected[0].selected = false;
+    }
   }
 
   onUserOrg(item: any) {
@@ -251,13 +256,13 @@ export class CreatePoliciesComponent implements OnInit {
   GetOrganizationById(page: number) {
     this.loading = true;
     const formData = new FormData();
-    
+
     const formValue = this.formUserPolicy.value;
     const search = formValue.search || '';
     formData.append('search', search);
     formData.append('result_type', this.UserType);
     formData.append('ou', this.OrgList);
-    if(this.policyId) {
+    if (this.policyId) {
       formData.append('edit_policy_id', this.policyId)
     }
     this.http.post(`organization/?page=${page}`, formData).subscribe((res: any) => {
@@ -265,6 +270,7 @@ export class CreatePoliciesComponent implements OnInit {
       if (res.status === true) {
         this.totalItems = responseData.count;
         this.OrganizationList = res.data;
+        this.OrganizationTopList = res.data;
         if (this.UserType === 'users') {
           if (this.UserList.length > 0) {
             for (let i = 0; i < this.UserList.length; i++) {
@@ -295,11 +301,12 @@ export class CreatePoliciesComponent implements OnInit {
               }
             }
           }
-        } else if (this.UserType === 'groups') {
+        } 
+        else if (this.UserType === 'groups') {
           if (this.TopGroupList.length > 0) {
             for (let i = 0; i < this.TopGroupList.length; i++) {
               const element = this.TopGroupList[i].id;
-              let TopGroupListSelected = this.OrganizationList.filter((x: any) => x.id === element);
+              let TopGroupListSelected = this.OrganizationTopList.filter((x: any) => x.id === element);
               if (TopGroupListSelected.length > 0) {
                 TopGroupListSelected[0].selected = true;
               }
@@ -324,14 +331,14 @@ export class CreatePoliciesComponent implements OnInit {
         this.authService.logout();
         this.router.navigate(['/signin']);
         this.loading = false;
-        
-      } else if(error.status === 400) {
+
+      } else if (error.status === 400) {
         this.toastr.error("Server Bad Request");
-      } else if(error.status === 403) {
+      } else if (error.status === 403) {
         this.toastr.error("Forbidden Error");
-      } else if(error.status === 404) {
+      } else if (error.status === 404) {
         this.toastr.error("Server not Found");
-      } else if(error.status === 500) {
+      } else if (error.status === 500) {
         this.toastr.error("Internal Server Error");
       } else {
         this.toastr.error("Server not reachable");
@@ -391,13 +398,13 @@ export class CreatePoliciesComponent implements OnInit {
       this.ControlEmptyList = res;
     }, error => {
       this.loading = false;
-      if(error.status === 400) {
+      if (error.status === 400) {
         this.toastr.error("Server Bad Request");
-      } else if(error.status === 403) {
+      } else if (error.status === 403) {
         this.toastr.error("Forbidden Error");
-      } else if(error.status === 404) {
+      } else if (error.status === 404) {
         this.toastr.error("Server not Found");
-      } else if(error.status === 500) {
+      } else if (error.status === 500) {
         this.toastr.error("Internal Server Error");
       } else {
         this.toastr.error("Server not reachable");
@@ -511,14 +518,14 @@ export class CreatePoliciesComponent implements OnInit {
           this.authService.logout();
           this.router.navigate(['/signin']);
           this.loading = false;
-          
-        } else if(error.status === 400) {
+
+        } else if (error.status === 400) {
           this.toastr.error("Server Bad Request");
-        } else if(error.status === 403) {
+        } else if (error.status === 403) {
           this.toastr.error("Forbidden Error");
-        } else if(error.status === 404) {
+        } else if (error.status === 404) {
           this.toastr.error("Server not Found");
-        } else if(error.status === 500) {
+        } else if (error.status === 500) {
           this.toastr.error("Internal Server Error");
         } else {
           this.toastr.error("Server not reachable");
@@ -545,14 +552,14 @@ export class CreatePoliciesComponent implements OnInit {
           this.authService.logout();
           this.router.navigate(['/signin']);
           this.loading = false;
-          
-        } else if(error.status === 400) {
+
+        } else if (error.status === 400) {
           this.toastr.error("Server Bad Request");
-        } else if(error.status === 403) {
+        } else if (error.status === 403) {
           this.toastr.error("Forbidden Error");
-        } else if(error.status === 404) {
+        } else if (error.status === 404) {
           this.toastr.error("Server not Found");
-        } else if(error.status === 500) {
+        } else if (error.status === 500) {
           this.toastr.error("Internal Server Error");
         } else {
           this.toastr.error("Server not reachable");
@@ -602,7 +609,7 @@ export class CreatePoliciesComponent implements OnInit {
         }
         this.UserList = JSON.parse(res.result.users_list);
         this.GroupList = JSON.parse(res.result.groups_list);
-        this.TopGroupList = JSON.parse(res.result.groups_list);
+        this.TopGroupList = JSON.parse(res.result.top_groups);
         this.ComputerList = JSON.parse(res.result.computers_list);
         this.OUList = JSON.parse(res.result.ous_list);
         if (res.result.alert_skin_id_list.length) {
@@ -611,7 +618,7 @@ export class CreatePoliciesComponent implements OnInit {
           } else {
             this.SkinList = JSON.parse(res.result.alert_skin_id_list);
           }
-        } 
+        }
         this.AlertSettingList = JSON.parse(res.result.alert_setting_list);
         this.authService.setCurrentUser({ token: res.token });
       } else {
@@ -624,14 +631,14 @@ export class CreatePoliciesComponent implements OnInit {
         this.authService.logout();
         this.router.navigate(['/signin']);
         this.loading = false;
-        
-      } else if(error.status === 400) {
+
+      } else if (error.status === 400) {
         this.toastr.error("Server Bad Request");
-      } else if(error.status === 403) {
+      } else if (error.status === 403) {
         this.toastr.error("Forbidden Error");
-      } else if(error.status === 404) {
+      } else if (error.status === 404) {
         this.toastr.error("Server not Found");
-      } else if(error.status === 500) {
+      } else if (error.status === 500) {
         this.toastr.error("Internal Server Error");
       } else {
         this.toastr.error("Server not reachable");
@@ -657,14 +664,14 @@ export class CreatePoliciesComponent implements OnInit {
         this.authService.logout();
         this.router.navigate(['/signin']);
         this.loading = false;
-        
-      } else if(error.status === 400) {
+
+      } else if (error.status === 400) {
         this.toastr.error("Server Bad Request");
-      } else if(error.status === 403) {
+      } else if (error.status === 403) {
         this.toastr.error("Forbidden Error");
-      } else if(error.status === 404) {
+      } else if (error.status === 404) {
         this.toastr.error("Server not Found");
-      } else if(error.status === 500) {
+      } else if (error.status === 500) {
         this.toastr.error("Internal Server Error");
       } else {
         this.toastr.error("Server not reachable");

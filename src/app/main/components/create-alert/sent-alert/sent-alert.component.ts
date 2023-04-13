@@ -230,9 +230,16 @@ export class SentAlertComponent implements OnInit {
 
   ResendChoice: any = 'original_audience';
   ResendId: any;
+  IsAcknowledgementRequired: any;
 
-  IsResendAlert(id: any) {
-    this.ResendId = id;
+  IsResendAlert(data: any) {
+    this.ResendId = data.id;
+    if (data.alert_type === 'PopupAlert') {
+      this.IsAcknowledgementRequired = data.popup_alert.acknowledgement_required;
+    } else {
+      this.IsAcknowledgementRequired = data.ticker_alert.acknowledgement_required;
+      
+    }
   }
 
   OnResendAlert() {

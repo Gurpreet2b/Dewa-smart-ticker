@@ -114,10 +114,12 @@
                                         <td>{{sent.like_count}}</td>
                                         <td class="marg">
                                             <span *ngIf="sent.status !== 'Pending'">
-                                                <span  *ngIf="sent.status !== 'Failed'">
-                                                        <span class="mr-2 cursor" title="Resend Alert" data-bs-toggle="modal"
-                                                        data-bs-target="#ResndAlertModal" (click)="IsResendAlert(sent.id)"
-                                                        *ngIf="RoleAssign[0].send && sent.is_parent === false" aria-disabled="true">
+                                                <span *ngIf="sent.status !== 'Failed'">
+                                                    <span class="mr-2 cursor" title="Resend Alert"
+                                                        data-bs-toggle="modal" data-bs-target="#ResndAlertModal"
+                                                        (click)="IsResendAlert(sent)"
+                                                        *ngIf="RoleAssign[0].send && sent.is_parent === false"
+                                                        aria-disabled="true">
                                                         <img src="assets/img/sent-alert-action/resend.png" alt="">
                                                     </span>
                                                     <span class="mr-2 cursor" title="Duplicate Alert"
@@ -140,21 +142,21 @@
                                                     </span>
 
                                                     <span *ngIf="sent.is_parent === false">
-                                                        <span *ngIf="sent.alert_type === 'PopupAlert'" class="mr-2 cursor"
-                                                            title="Popup Alert Details" data-bs-toggle="modal"
-                                                            data-bs-target="#ColumnChartModal"
+                                                        <span *ngIf="sent.alert_type === 'PopupAlert'"
+                                                            class="mr-2 cursor" title="Popup Alert Details"
+                                                            data-bs-toggle="modal" data-bs-target="#ColumnChartModal"
                                                             (click)="GetGraphStats(sent, 'alert')">
                                                             <img src="assets/img/sent-alert-action/graph.png" alt="">
                                                         </span>
-                                                        <span *ngIf="sent.alert_type === 'TickerAlert'" class="mr-2 cursor"
-                                                            title="Ticker Alert Details" data-bs-toggle="modal"
-                                                            data-bs-target="#ColumnChartModal"
+                                                        <span *ngIf="sent.alert_type === 'TickerAlert'"
+                                                            class="mr-2 cursor" title="Ticker Alert Details"
+                                                            data-bs-toggle="modal" data-bs-target="#ColumnChartModal"
                                                             (click)="GetGraphStats(sent, 'alert')">
                                                             <img src="assets/img/sent-alert-action/graph.png" alt="">
                                                         </span>
-                                                        <span *ngIf="sent.alert_type === 'RsvpAlert'" class="mr-2 cursor"
-                                                            title="RSVP Alert Details" data-bs-toggle="modal"
-                                                            data-bs-target="#RSVPPieChartModal"
+                                                        <span *ngIf="sent.alert_type === 'RsvpAlert'"
+                                                            class="mr-2 cursor" title="RSVP Alert Details"
+                                                            data-bs-toggle="modal" data-bs-target="#RSVPPieChartModal"
                                                             (click)="GetGraphStats(sent, 'RSVP')">
                                                             <img src="assets/img/sent-alert-action/graph.png" alt="">
                                                         </span>
@@ -177,8 +179,8 @@
                                                         <img src="assets/img/sent-alert-action/preview.png" alt="">
                                                     </span>
                                                     <span *ngIf="sent.alert_type === 'RsvpAlert'" class="mr-2 cursor"
-                                                        title="Rsvp Alert" (click)="GetSkinListById(sent)" data-bs-toggle="modal"
-                                                        data-bs-target="#PreviewRSVPSentModal">
+                                                        title="Rsvp Alert" (click)="GetSkinListById(sent)"
+                                                        data-bs-toggle="modal" data-bs-target="#PreviewRSVPSentModal">
                                                         <img src="assets/img/sent-alert-action/preview.png" alt="">
                                                     </span>
                                                     <span class="text-danger cursor" (click)="delete(sent.id)"
@@ -255,7 +257,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row" *ngIf="IsAcknowledgementRequired">
                     <div class="col-md-12">
                         <div class="form-group">
                             <input type="radio" id="acknowledged" name="resendAlert" value="not_acknowledged"
@@ -324,8 +326,7 @@
                             <div class="">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h3 class="alertTitle-scroll" id="sent-title-text"
-                                            style="color: #fff; font-family: 'Dubai-Bold', sans-serif !important; word-wrap: break-word;
+                                        <h3 class="alertTitle-scroll" id="sent-title-text" style="color: #fff; font-family: 'Dubai-Bold', sans-serif !important; word-wrap: break-word;
                                             max-height: 50px; overflow-x: auto;">
                                             <!-- {{TextTitle}} -->
                                         </h3>
@@ -346,7 +347,7 @@
                                         </h6>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -403,7 +404,7 @@
         </div>
 
         <div *ngIf="!ShowFooter">
-            <div   class="modal-content"
+            <div class="modal-content"
                 [ngStyle]="{'background-color': AlertBgColor, 'border': Think + 'px solid' + HeaderBorder, 'width': AlertWidth, 'height': AlertHeight}">
                 <!-- Modal Header -->
                 <div class="">
@@ -435,8 +436,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <h3 class="alertTitle-scroll" id="sent-title-text"
-                                        [ngStyle]="IsWhiteColor?{'color': 'black'} : {'color': '#fff'}"
-                                        style="font-family: 'Dubai-Bold', sans-serif !important; word-wrap: break-word;
+                                            [ngStyle]="IsWhiteColor?{'color': 'black'} : {'color': '#fff'}" style="font-family: 'Dubai-Bold', sans-serif !important; word-wrap: break-word;
                                         max-height: 50px; overflow-x: auto;">
                                             <!-- {{TextTitle}} -->
                                         </h3>
@@ -448,7 +448,8 @@
                                         <h6 style="overflow-x: hidden;" [ngStyle]="{'height': AlertBodyHeight}">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <div id="sent-body-text" [ngStyle]="IsWhiteColor?{'color': 'black'} : {'color': '#fff'}">
+                                                    <div id="sent-body-text"
+                                                        [ngStyle]="IsWhiteColor?{'color': 'black'} : {'color': '#fff'}">
                                                         <!-- {{TextBody}} -->
                                                     </div>
                                                 </div>
@@ -456,7 +457,7 @@
                                         </h6>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -515,7 +516,7 @@
     </div>
 </div>
 
-<div class="modal fade bd-example-modal-lg" id="PreviewScrollingModal" >
+<div class="modal fade bd-example-modal-lg" id="PreviewScrollingModal">
     <div class="modal-dialog modal-lg modal-static1">
         <div class="modal-content" [ngStyle]="{'border': Think + 'px solid' + HeaderBorder}">
             <div class="row" style="display: flex; padding: 0; margin: 0;"
@@ -577,8 +578,7 @@
                             <div class="">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h3 class="alertTitle-scroll" id="sent-rsvp-title-text"
-                                            style="color: #fff; font-family: 'Dubai-Bold', sans-serif !important; word-wrap: break-word;
+                                        <h3 class="alertTitle-scroll" id="sent-rsvp-title-text" style="color: #fff; font-family: 'Dubai-Bold', sans-serif !important; word-wrap: break-word;
                                             max-height: 50px; overflow-x: auto;">
                                             <!-- {{TextTitle}}  -->
                                         </h3>
@@ -626,7 +626,7 @@
                                     </div>
                                 </div>
 
-                                
+
                             </div>
                         </div>
                     </div>
@@ -715,8 +715,8 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <h3 class="alertTitle-scroll" id="sent-rsvp-title-text"
-                                        [ngStyle]="IsWhiteColor?{'color': 'black'} : {'color': '#fff'}"
-                                        style="max-height: 50px; overflow-x: auto;">
+                                            [ngStyle]="IsWhiteColor?{'color': 'black'} : {'color': '#fff'}"
+                                            style="max-height: 50px; overflow-x: auto;">
                                             <!-- {{TextTitle}} -->
                                         </h3>
                                     </div>
@@ -728,7 +728,8 @@
                                             <h6>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <h6 id="sent-rsvp-body-text" [ngStyle]="IsWhiteColor?{'color': 'black'} : {'color': '#fff'}"
+                                                        <h6 id="sent-rsvp-body-text"
+                                                            [ngStyle]="IsWhiteColor?{'color': 'black'} : {'color': '#fff'}"
                                                             style="font-family: 'Dubai-Bold', sans-serif !important; word-wrap: break-word;">
                                                             <!-- {{TextBody}} -->
                                                         </h6>
@@ -795,7 +796,7 @@
                                     </div>
                                 </div> -->
 
-                                
+
                             </div>
                         </div>
                     </div>

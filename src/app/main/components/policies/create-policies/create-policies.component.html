@@ -77,7 +77,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link accord" data-bs-toggle="tab" href="#topGroups" role="tab"
-                                        (click)="onUserOrg('groups')">{{'CreatePolicies.topGroups' | translate}}
+                                        (click)="onUserOrg('top_groups')">{{'CreatePolicies.topGroups' | translate}}
                                         </a>
                                     </li>
                                 </ul>
@@ -1071,7 +1071,7 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr
-                                                                        *ngFor="let org of OrganizationList | paginate: { id:'first', itemsPerPage: 10, currentPage: currentPage, totalItems: totalItems }; let i=index">
+                                                                        *ngFor="let org of OrganizationTopList | paginate: { id:'first', itemsPerPage: 10, currentPage: currentPage, totalItems: totalItems }; let i=index">
                                                                         <td>
                                                                             <input type="checkbox" [(ngModel)]="org.selected" [ngModelOptions]="{standalone: true}"
                                                                                 (click)="IsPolicyTopGroup($event, org, i)">
@@ -1143,7 +1143,7 @@
                                                                                     <span
                                                                                         class="text-danger">
                                                                                         <i class="far fa-trash-alt cursor"
-                                                                                            (click)="onRemoveRowTopGroup(g)"></i>
+                                                                                            (click)="onRemoveRowTopGroup(g, group)"></i>
                                                                                     </span>
                                                                                 </td>
                                                                             </tr>

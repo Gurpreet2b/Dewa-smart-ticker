@@ -200,7 +200,6 @@ export class CreateAlertComponent implements OnInit {
     this.SechduleData.end_after_date = this.dtPipe.transform(date, 'yyyy-MM-dd');
 
     this.SkinIdListLocalStorge = this.authService.getSkinIdList();
-    debugger;
     if (this.SkinIdListLocalStorge.length > 0) {
       this.SkinListLocal = SkinData;
       this.GetLocalSkinList(this.SkinListLocal);
@@ -278,7 +277,6 @@ export class CreateAlertComponent implements OnInit {
 
   // Local Skin List By Id Data
   async GetLocalSkinListById(skinId: any) {
-    debugger;
     let SkinData = this.SkinList.filter((x: any) => x.id === skinId);
     let res = SkinData[0];
 
@@ -1939,7 +1937,6 @@ export class CreateAlertComponent implements OnInit {
   IsTickerColorValue: any;
   ShowFooterImgCheck: any = false
   async IsTickerColorChange(event: any) {
-    debugger;
     this.ShowFooterImgCheck = event.show_alert_footer;
     this.IsTickerColorValue = event.id;
     this.SkinId = event.id;
