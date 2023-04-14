@@ -105,9 +105,15 @@ export class ApprovalListComponent implements OnInit {
       } else if(error.status === 403) {
         this.toastr.error("Forbidden Error");
       } else if(error.status === 404) {
-        this.toastr.error("Server not Found");
+        this.toastr.error("Page not Found");
       } else if(error.status === 500) {
         this.toastr.error("Internal Server Error");
+      } else if(error.status === 504) {
+        this.toastr.error("Server Gateway Timeout");
+      } else if(error.status === 413) {
+        this.toastr.error("Data Limit Exceeded");
+      } else if(error.status === 408) {
+        this.toastr.error("Request Timeout");
       } else {
         this.toastr.error("Server not reachable");
         this.loading = false;
@@ -155,9 +161,15 @@ export class ApprovalListComponent implements OnInit {
       } else if(error.status === 403) {
         this.toastr.error("Forbidden Error");
       } else if(error.status === 404) {
-        this.toastr.error("Server not Found");
+        this.toastr.error("Page not Found");
       } else if(error.status === 500) {
         this.toastr.error("Internal Server Error");
+      } else if(error.status === 504) {
+        this.toastr.error("Server Gateway Timeout");
+      } else if(error.status === 413) {
+        this.toastr.error("Data Limit Exceeded");
+      } else if(error.status === 408) {
+        this.toastr.error("Request Timeout");
       } else {
         this.toastr.error("Server not reachable");
         this.loading = false;
@@ -192,9 +204,15 @@ export class ApprovalListComponent implements OnInit {
       } else if(error.status === 403) {
         this.toastr.error("Forbidden Error");
       } else if(error.status === 404) {
-        this.toastr.error("Server not Found");
+        this.toastr.error("Page not Found");
       } else if(error.status === 500) {
         this.toastr.error("Internal Server Error");
+      } else if(error.status === 504) {
+        this.toastr.error("Server Gateway Timeout");
+      } else if(error.status === 413) {
+        this.toastr.error("Data Limit Exceeded");
+      } else if(error.status === 408) {
+        this.toastr.error("Request Timeout");
       } else {
         this.toastr.error("Server not reachable");
         this.loading = false;
@@ -255,9 +273,15 @@ export class ApprovalListComponent implements OnInit {
       } else if(error.status === 403) {
         this.toastr.error("Forbidden Error");
       } else if(error.status === 404) {
-        this.toastr.error("Server not Found");
+        this.toastr.error("Page not Found");
       } else if(error.status === 500) {
         this.toastr.error("Internal Server Error");
+      } else if(error.status === 504) {
+        this.toastr.error("Server Gateway Timeout");
+      } else if(error.status === 413) {
+        this.toastr.error("Data Limit Exceeded");
+      } else if(error.status === 408) {
+        this.toastr.error("Request Timeout");
       } else {
         this.toastr.error("Server not reachable");
         this.loading = false;
@@ -296,9 +320,15 @@ export class ApprovalListComponent implements OnInit {
       } else if(error.status === 403) {
         this.toastr.error("Forbidden Error");
       } else if(error.status === 404) {
-        this.toastr.error("Server not Found");
+        this.toastr.error("Page not Found");
       } else if(error.status === 500) {
         this.toastr.error("Internal Server Error");
+      } else if(error.status === 504) {
+        this.toastr.error("Server Gateway Timeout");
+      } else if(error.status === 413) {
+        this.toastr.error("Data Limit Exceeded");
+      } else if(error.status === 408) {
+        this.toastr.error("Request Timeout");
       } else {
         this.toastr.error("Server not reachable");
         this.loading = false;
@@ -361,9 +391,15 @@ export class ApprovalListComponent implements OnInit {
       } else if(error.status === 403) {
         this.toastr.error("Forbidden Error");
       } else if(error.status === 404) {
-        this.toastr.error("Server not Found");
+        this.toastr.error("Page not Found");
       } else if(error.status === 500) {
         this.toastr.error("Internal Server Error");
+      } else if(error.status === 504) {
+        this.toastr.error("Server Gateway Timeout");
+      } else if(error.status === 413) {
+        this.toastr.error("Data Limit Exceeded");
+      } else if(error.status === 408) {
+        this.toastr.error("Request Timeout");
       } else {
         this.toastr.error("Server not reachable");
         this.loading = false;
