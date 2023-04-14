@@ -533,6 +533,8 @@ export class SentAlertComponent implements OnInit {
       this.HeaderTitle = item.skin_id.header_custom_message;
       this.HeaderFontSize = item.skin_id.header_custom_message_font_color;
       this.FooterImageUrl = item.skin_id.footer_background_image;
+      this.FooterImgUrl = item.skin_id.alternate_footer_image;
+
       
       // await new Promise(f => setTimeout(f, 100));
 

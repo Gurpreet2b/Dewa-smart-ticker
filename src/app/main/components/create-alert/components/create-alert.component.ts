@@ -961,7 +961,7 @@ export class CreateAlertComponent implements OnInit {
       }
       if (document.getElementById("header-text-skin") !== null || document.getElementById("header-text-img") !== null) {
         document.getElementById("header-text-skin").innerHTML = `${this.HeaderTitle}`;
-        document.getElementById("header-text-img").innerHTML = `<img src="${this.HeaderTextImg}" alt="Logo" width="180" height="auto">`;
+        document.getElementById("header-text-img").innerHTML = `<img src="${this.HeaderTextImg}" alt="Logo" width="130" height="auto">`;
       }
       document.getElementById("footer-img").innerHTML = `<img src="${this.FooterImageUrl}" alt="Logo" width="180" height="55">`;
       // document.getElementById("footer-align").style.textAlign = `${this.FooterLogo}`;
