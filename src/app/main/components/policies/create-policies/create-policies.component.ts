@@ -242,11 +242,44 @@ export class CreatePoliciesComponent implements OnInit {
     }
   }
 
+  IsActiveUserTab: any = true;
+  IsActiveGroupTab: any = false;
+  IsActiveOUTab: any = false;
+  IsActiveComputerTab: any = false;
+  public IsActiveUserAll: any = true;
   onUserOrg(item: any) {
     this.UserType = item;
     this.OrgList = 'all'
     this.GetOrganizationById(1);
     this.currentPage = 1;
+    if (item === 'users') {
+      this.IsActiveUserTab = true;
+      this.IsActiveGroupTab = false;
+      this.IsActiveOUTab = false;
+      this.IsActiveComputerTab = false;
+      this.IsActiveUserAll = true;
+    } else if (item === 'groups') {
+      this.IsActiveUserTab = false;
+      this.IsActiveGroupTab = true;
+      this.IsActiveOUTab = false;
+      this.IsActiveComputerTab = false;
+      this.IsActiveUserAll = true;
+    } else if (item === 'computers') {
+      this.IsActiveUserTab = false;
+      this.IsActiveGroupTab = false;
+      this.IsActiveOUTab = false;
+      this.IsActiveComputerTab = true;
+      this.IsActiveUserAll = true;
+    } else if (item === 'top_groups') {
+      this.IsActiveOUTab = false;
+      this.IsActiveUserTab = true;
+      this.IsActiveUserAll = true;
+    } else {
+      this.IsActiveUserTab = false;
+      this.IsActiveGroupTab = false;
+      this.IsActiveOUTab = true;
+      this.IsActiveComputerTab = false;
+    }
 
   }
 

@@ -59,7 +59,8 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link accord" data-bs-toggle="tab" href="#list" role="tab"> {{'CreatePolicies.listOfRecipientTab' | translate}}
+                                        <a class="nav-link accord" data-bs-toggle="tab" href="#list" role="tab"
+                                        (click)="onUserOrg('users')"> {{'CreatePolicies.listOfRecipientTab' | translate}}
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -187,27 +188,32 @@
                                             <ul class="nav nav-tabs dash-tabs" role="tablist">
                                                 <li class="nav-item active">
                                                     <a class="nav-link active accord" data-bs-toggle="tab" href="#user"
-                                                        role="tab" (click)="onUserOrg('users')"> {{'CreatePolicies.listUsersTab' | translate}}
+                                                        role="tab" (click)="onUserOrg('users')"
+                                                        [ngClass]="{'active': IsActiveUserTab === true}"> {{'CreatePolicies.listUsersTab' | translate}}
                                                     </a>
                                                 </li>
                                                 <li class="nav-item">
                                                     <a class="nav-link accord" data-bs-toggle="tab" href="#user" role="tab"
-                                                        (click)="onUserOrg('groups')"> {{'CreatePolicies.listGroupsTab' | translate}}
+                                                        (click)="onUserOrg('groups')"
+                                                        [ngClass]="{'active': IsActiveGroupTab === true}"> {{'CreatePolicies.listGroupsTab' | translate}}
                                                     </a>
                                                 </li>
                                                 <li class="nav-item">
                                                     <a class="nav-link accord" data-bs-toggle="tab" href="#ous"
-                                                        role="tab"> {{'CreatePolicies.listOusTab' | translate}}
+                                                        role="tab" [ngClass]="{'active': IsActiveOUTab === true}">
+                                                         {{'CreatePolicies.listOusTab' | translate}}
                                                     </a>
                                                 </li>
                                                 <li class="nav-item">
                                                     <a class="nav-link accord" data-bs-toggle="tab" href="#user" role="tab"
-                                                        (click)="onUserOrg('computers')"> {{'CreatePolicies.listComputerTab' | translate}}
+                                                        (click)="onUserOrg('computers')"
+                                                        [ngClass]="{'active': IsActiveComputerTab === true}"> {{'CreatePolicies.listComputerTab' | translate}}
                                                     </a>
                                                 </li>
                                             </ul>
                                             <div class="tab-content" style="width: 100%;">
-                                                <div class="tab-pane active" id="user" role="tabpanel">
+                                                <div class="tab-pane active" id="user" role="tabpanel"
+                                                [ngClass]="{'active': IsActiveUserAll === true}">
                                                     <div class="row mt-3">
                                                         <div class="col-md-7">
                                                             <label> {{'CreatePolicies.searchUsers' | translate}}</label>
@@ -469,7 +475,8 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="tab-pane" id="ous" role="tabpanel">
+                                                <div class="tab-pane" id="ous" role="tabpanel"
+                                                [ngClass]="{'active': IsActiveOUTab === true}">
                                                     <div class="row mt-3">
                                                         <div class="col-md-7">
                                                             <div class="card">

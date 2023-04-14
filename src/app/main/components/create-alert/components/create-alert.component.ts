@@ -1415,13 +1415,15 @@ export class CreateAlertComponent implements OnInit {
       }
     }
 
-    this.startTimer();
-   
+    
     this.submitted = true;
     this.alertForm.markAllAsTouched();
     if (!this.alertForm.valid) {
       return;
     }
+    
+    this.startTimer();
+
     const dataToSubmit = { ...this.alertForm.value };
     const formData = new FormData();
     formData.append('html', this.ScriptHTML);
@@ -1986,12 +1988,14 @@ export class CreateAlertComponent implements OnInit {
     }
     
 
-    this.startTimer();
     this.submitted = true;
     this.tickerForm.markAllAsTouched();
     if (!this.tickerForm.valid) {
       return;
     }
+
+    this.startTimer();
+
     const dataToSubmit = { ...this.tickerForm.value };
     const formData = new FormData();
     formData.append('html', this.ScriptScrollingHTML);
@@ -2442,13 +2446,15 @@ export class CreateAlertComponent implements OnInit {
       }
     }
     
-    this.startTimer();
     this.IsRSVPScript();
     this.submitted = true;
     this.RSVPForm.markAllAsTouched();
     if (!this.RSVPForm.valid) {
       return;
     }
+
+    this.startTimer();
+    
     const dataToSubmit = { ...this.RSVPForm.value };
     const formData = new FormData();
     formData.append('name', this.AlertRSVPEditTitlePreviewName);
